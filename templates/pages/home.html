@@ -4,7 +4,11 @@
 {% endblock %}
 {% block content %}
     Welcome To Tweet Me 2
+    <div id="tweets">
+        Loading...
+    </div>
 <script>
+    const tweetsElement = document.getElementById("tweets")
     const xhr = new XMLHttpRequest()
     const method = 'GET'
     const url = "/tweets"
@@ -13,9 +17,17 @@
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function() {
-        console.log(xhr.response)
         const serverResponse = xhr.response
         let listedItems = serverResponse.response
+        let finalTweetStr = ""
+        let i = 0;
+        for (i=0; i<listedItems.length; i++) {
+            console.log(i)
+            console.log(listedItems[i])
+            let currentItem = "<div><h1>" + listedItems[i].id + "</h1> <p>" + listedItems[i].content + "</p></div>"
+            finalTweetStr += currentItem
+        }
+        tweetsElement.innerHTML = finalTweetStr
         console.log(listedItems)
     }
     xhr.send()
