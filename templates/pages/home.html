@@ -8,28 +8,36 @@
         Loading...
     </div>
 <script>
-    const tweetsElement = document.getElementById("tweets")
-    const xhr = new XMLHttpRequest()
-    const method = 'GET'
-    const url = "/tweets"
-    const responseType = "json"
+function formatTweetElement(tweet) {
+    let formatted = "<div class='mb-4 tweet' id='tweet-" + tweet.id + "'><p>" + tweet.content +
+        "</p><div class='btn-group'>" + LikeBtn(tweet) +
+        "</div></div>"
+    return formatted
+}
+function LikeBtn(tweet) {
+    return `<button class='btn btn-primary btn-small' onclick=handleLike(${tweet.id},${tweet.likes})>${tweet.likes} Likes</button>`
+}
 
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function() {
-        const serverResponse = xhr.response
-        let listedItems = serverResponse.response
-        let finalTweetStr = ""
-        let i = 0;
-        for (i=0; i<listedItems.length; i++) {
-            console.log(i)
-            console.log(listedItems[i])
-            let currentItem = "<div><h1>" + listedItems[i].id + "</h1> <p>" + listedItems[i].content + "</p></div>"
-            finalTweetStr += currentItem
-        }
-        tweetsElement.innerHTML = finalTweetStr
-        console.log(listedItems)
+function handleLike(tweet_id, currentCount) {
+    console.log(tweet_id, currentCount)
+}
+const tweetsElement = document.getElementById("tweets")
+const xhr = new XMLHttpRequest()
+const method = 'GET'
+const url = "/tweets"
+const responseType = "json"
+
+xhr.responseType = responseType
+xhr.open(method, url)
+xhr.onload = function() {
+    const serverResponse = xhr.response
+    let listedItems = serverResponse.response
+    let finalTweetStr = ""
+    for (let i=0; i < listedItems.length; i++) {
+        finalTweetStr += formatTweetElement(listedItems[i])
     }
-    xhr.send()
+    tweetsElement.innerHTML = finalTweetStr
+}
+xhr.send()
 </script>
 {% endblock %}
