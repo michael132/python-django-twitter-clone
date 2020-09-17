@@ -3,19 +3,23 @@
     Tweet Me 2
 {% endblock %}
 {% block content %}
-    Welcome To Tweet Me 2
-    <div id="tweets">
+    <div class="row text-center">
+        <div class="col">
+            <h1>To Tweet Me 2</h1>
+        </div>
+    </div>
+    <div class="row" id="tweets">
         Loading...
     </div>
 <script>
 function formatTweetElement(tweet) {
-    let formatted = "<div class='mb-4 tweet' id='tweet-" + tweet.id + "'><p>" + tweet.content +
+    let formatted = "<div class='mb-4 tweet col-12 col-md-10 mx-auto mb-4 border rounded py-3' id='tweet-" + tweet.id + "'><p>" + tweet.content +
         "</p><div class='btn-group'>" + LikeBtn(tweet) +
         "</div></div>"
     return formatted
 }
 function LikeBtn(tweet) {
-    return `<button class='btn btn-primary btn-small' onclick=handleLike(${tweet.id},${tweet.likes})>${tweet.likes} Likes</button>`
+    return `<button class='btn btn-primary btn-sm' onclick=handleLike(${tweet.id},${tweet.likes})>${tweet.likes} Likes</button>`
 }
 
 function handleLike(tweet_id, currentCount) {
