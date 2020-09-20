@@ -13,7 +13,7 @@
             <form id="tweet-create-form" class="form" method="POSt" action="/create-tweet/">
                 {% csrf_token %}
                 <input type="hidden" value="/" name="next">
-                <textarea class="form-control" name="content" placeholder="Your tweet..."></textarea>
+                <textarea required class="form-control" name="content" placeholder="Your tweet..."></textarea>
                 <button class="btn btn-primary" type="submit">Tweet</button>
             </form>
         </div>
@@ -39,6 +39,8 @@ function handleTweetCreateFormDidSubmit(event) {
         if (xhr.status === 201) {
             const newTweet = xhr.response
             const newTweetElement = formatTweetElement(newTweet)
+            tweetsElement.innerHTML = newTweetElement + tweetsElement.innerHTML
+            form.reset()
         }
     }
     xhr.send(formData)
