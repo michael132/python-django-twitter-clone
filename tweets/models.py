@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 import random
 
-
 User = settings.AUTH_USER_MODEL
 
 
